@@ -1,58 +1,76 @@
-## Project: Build a Traffic Sign Recognition Program
-[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
+# **Traffic Sign Recognition Using LeNet** 
 
-Overview
----
-In this project, you will use what you've learned about deep neural networks and convolutional neural networks to classify traffic signs. You will train and validate a model so it can classify traffic sign images using the [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset). After the model is trained, you will then try out your model on images of German traffic signs that you find on the web.
+## Deep Learning
 
-We have included an Ipython notebook that contains further instructions 
-and starter code. Be sure to download the [Ipython notebook](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb). 
+**Build a Traffic Sign Recognition Project**
 
-We also want you to create a detailed writeup of the project. Check out the [writeup template](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/writeup_template.md) for this project and use it as a starting point for creating your own writeup. The writeup can be either a markdown file or a pdf document.
+The steps of this project are the following:
+- Load the data set (see below for links to the project data set)
+- Explore, summarize and visualize the data set
+- Design, train and test a model architecture
+- Use the model to make predictions on new images
+- Analyze the softmax probabilities of the new images
 
-To meet specifications, the project will require submitting three files: 
-* the Ipython notebook with the code
-* the code exported as an html file
-* a writeup report either as a markdown or pdf file 
+[//]: # (Image References)
 
-Creating a Great Writeup
----
-A great writeup should include the [rubric points](https://review.udacity.com/#!/rubrics/481/view) as well as your description of how you addressed each point.  You should include a detailed description of the code used in each step (with line-number references and code snippets where necessary), and links to other supporting documents or external references.  You should include images in your writeup to demonstrate how your code works with examples.  
+[image1]: ./examples/visualization.jpg "Visualization"
+[image2]: ./examples/grayscale.jpg "Grayscaling"
+[image3]: ./examples/random_noise.jpg "Random Noise"
+[image4]: ./examples/placeholder.png "Traffic Sign 1"
+[image5]: ./examples/placeholder.png "Traffic Sign 2"
+[image6]: ./examples/placeholder.png "Traffic Sign 3"
+[image7]: ./examples/placeholder.png "Traffic Sign 4"
+[image8]: ./examples/placeholder.png "Traffic Sign 5"
 
-All that said, please be concise!  We're not looking for you to write a book here, just a brief description of how you passed each rubric point, and references to the relevant code :). 
+### Data Set Summary & Exploration
 
-You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup.
+* The size of training set is 34799
+* The size of the validation set is 4410
+* The size of test set is 12630
+* The shape of a traffic sign image is (32, 32, 3)
+* The number of unique classes/labels in the data set is 43
 
-The Project
----
-The goals / steps of this project are the following:
-* Load the data set
-* Explore, summarize and visualize the data set
-* Design, train and test a model architecture
-* Use the model to make predictions on new images
-* Analyze the softmax probabilities of the new images
-* Summarize the results with a written report
+Here is an exploratory visualization of the data set. 
 
-### Dependencies
-This lab requires:
+![Histogram Graph](For-README/Histogram.png)
 
-* [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit)
+### Picture Preprocessing
 
-The lab environment can be created with CarND Term1 Starter Kit. Click [here](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) for the details.
+![LeNet](For-README/Preprocessing.png)
 
-### Dataset and Repository
+* Convert to grayscle: The color in the image will not help us identify the sign, so converting the image to grayscale would help us improve the accuracy. 
+* Normalized the pictures so they would have lower mean values. A wider distribution in the data would make it more difficult to train using a singlar learning rate. 
 
-1. Download the data set. The classroom has a link to the data set in the "Project Instructions" content. This is a pickled dataset in which we've already resized the images to 32x32. It contains a training, validation and test set.
-2. Clone the project, which contains the Ipython notebook and the writeup template.
-```sh
-git clone https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project
-cd CarND-Traffic-Sign-Classifier-Project
-jupyter notebook Traffic_Sign_Classifier.ipynb
-```
+### LeNet Architecture
 
-### Requirements for Submission
-Follow the instructions in the `Traffic_Sign_Classifier.ipynb` notebook and write the project report using the writeup template as a guide, `writeup_template.md`. Submit the project code and writeup document.
+![Histogram Graph](For-README/LeNet.png)
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+The parameters I used are:
 
+* Batch size: 100
+* Epochs: 30
+* Learning Rate: 0.0009
+* Dropout Keep Probability: 0.5
+
+Final model results were:
+
+* validation set accuracy of 96.5%
+* test set accuracy of 94%
+
+Only the orignial LeNet is implemented. I used an iterative approach to get the result. Generally, a larger epoch number would get a higher accuracy, but with enough epoch the accuracy would not increase after a point. The dropout would reduce the overfitting of the network. 
+
+
+### Test the Model on New Images
+
+Here are five German traffic signs that I found on the web:
+
+![alt text](mySigns/traffic1.jpg) ![alt text](mySigns/traffic2.jpg) ![alt text](mySigns/traffic3.jpg)
+![alt text](mySigns/traffic4.jpg) ![alt text](mySigns/traffic5.jpg)
+
+#### Test result analysis
+
+The test accuracy is 60%, which is not high. Here is the guess results.
+
+![test](For-README/test.png) 
+
+We can see that stop signs and speed signs are hard to identify. Perhaps this is due to that the quality of the original trainning data is low. Particularly, speed signs are hard to identify because they all have the same shape. 
