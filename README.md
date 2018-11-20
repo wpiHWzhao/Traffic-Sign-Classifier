@@ -59,6 +59,10 @@ Final model results were:
 
 Only the orignial LeNet is implemented. I used an iterative approach to get the result. Generally, a larger epoch number would get a higher accuracy, but with enough epoch the accuracy would not increase after a point. The dropout would reduce the overfitting of the network. 
 
+* Learning rate : 0.01-90%
+* Learning rate: 0.001-92.3%
+* Learning rate: 0.0001-93.1%
+* Learning rate: 0.0009-94%
 
 ### Test the Model on New Images
 
